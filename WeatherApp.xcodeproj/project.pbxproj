@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3972DE5F2BF8C60500F89AA4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3972DE5E2BF8C60500F89AA4 /* Alamofire */; };
+		3972DE612BF8C60500F89AA4 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 3972DE602BF8C60500F89AA4 /* AlamofireDynamic */; };
 		39BB51FB2BF7DCAD002DA4C2 /* WeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BB51FA2BF7DCAD002DA4C2 /* WeatherAppApp.swift */; };
 		39BB51FD2BF7DCAD002DA4C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BB51FC2BF7DCAD002DA4C2 /* ContentView.swift */; };
 		39BB51FF2BF7DCAF002DA4C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39BB51FE2BF7DCAF002DA4C2 /* Assets.xcassets */; };
@@ -38,6 +40,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3972DE5F2BF8C60500F89AA4 /* Alamofire in Frameworks */,
+				3972DE612BF8C60500F89AA4 /* AlamofireDynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +169,10 @@
 			dependencies = (
 			);
 			name = WeatherApp;
+			packageProductDependencies = (
+				3972DE5E2BF8C60500F89AA4 /* Alamofire */,
+				3972DE602BF8C60500F89AA4 /* AlamofireDynamic */,
+			);
 			productName = WeatherApp;
 			productReference = 39BB51F72BF7DCAD002DA4C2 /* WeatherApp.app */;
 			productType = "com.apple.product-type.application";
@@ -193,6 +201,9 @@
 				Base,
 			);
 			mainGroup = 39BB51EE2BF7DCAD002DA4C2;
+			packageReferences = (
+				3972DE5D2BF8C60500F89AA4 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 39BB51F82BF7DCAD002DA4C2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -430,6 +441,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3972DE5D2BF8C60500F89AA4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3972DE5E2BF8C60500F89AA4 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3972DE5D2BF8C60500F89AA4 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		3972DE602BF8C60500F89AA4 /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3972DE5D2BF8C60500F89AA4 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		39BB52052BF7DCAF002DA4C2 /* WeatherApp.xcdatamodeld */ = {
