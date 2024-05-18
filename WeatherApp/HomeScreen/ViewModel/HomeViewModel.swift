@@ -23,9 +23,10 @@ class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 switch response.result {
                 case .success(let data):
                     DispatchQueue.main.async {
-//                        self.day2 = data.forecast.forecastday[1].date
-//                        self.day3 = data.forecast.forecastday[2].date
+                        self.day2 = data.forecast.forecastday[1].date
+                        self.day3 = data.forecast.forecastday[2].date
                         print("success")
+                        print(data.forecast.forecastday[0].hour.count)
                         
                         self.response = data
                     }

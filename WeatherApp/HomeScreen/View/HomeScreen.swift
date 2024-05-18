@@ -45,59 +45,68 @@ struct HomeScreen: View {
                     .offset(x: -110, y: 8)
                     .font(.subheadline)
                 List {
-                    NavigationLink(destination: DetailsScreen()) {
-                        HStack(alignment: .center, spacing: nil) {
-                            Text("Today")
-                                .font(.custom("Menlo", size: 26))
-                            Text("⛅️")
-                            
-                            let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[0].day.avgtempC ?? 0)
-                            Text("\(avg)°")
-                            
-                            Spacer()
-                            Text("\(viewModel.response?.forecast.forecastday[0].day.condition.text ?? "Unknown")")
-                                .font(.system(size: 14))
-                        }
-                        .font(.system(size: 24))
+                    if let forecast = viewModel.response?.forecast.forecastday.first {
+                        let det = DetailsViewModel(forecast: forecast)
                         
-                    }
-                    .listRowBackground(Color.white.opacity(0.3))
-                    
-                    NavigationLink(destination: DetailsScreen()) {
-                        HStack(alignment: .center, spacing: nil) {
-                            Text("\(viewModel.dayName(from: viewModel.day2 ?? "2024-05-18").prefix(3))")
-                                .font(.custom("Menlo", size: 26))
+                        NavigationLink(destination: DetailsScreen(detailsViewModel: det)) {
+                            HStack(alignment: .center, spacing: nil) {
+                                Text("Today")
+                                    .font(.custom("Menlo", size: 26))
+                                Text("⛅️")
+                                
+                                let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[0].day.avgtempC ?? 0)
+                                Text("\(avg)°")
+                                
+                                Spacer()
+                                Text("\(viewModel.response?.forecast.forecastday[0].day.condition?.text ?? "Unknown")")
+                                    .font(.system(size: 14))
+                            }
+                            .font(.system(size: 24))
                             
-                            Text("⛅️")
-                                .padding(.leading, 30)
-                            let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[1].day.avgtempC ?? 0)
-                            Text("\(avg)°")
-                            
-                            Spacer()
-                            Text("\(viewModel.response?.forecast.forecastday[1].day.condition.text ?? "Unknown")")
-                                .font(.system(size: 14))
                         }
-                        .font(.system(size: 24))
-                        
+                        .listRowBackground(Color.white.opacity(0.3))
                     }
-                    .listRowBackground(Color.white.opacity(0.3))
-                    NavigationLink(destination: DetailsScreen()) {
-                        HStack(alignment: .center, spacing: nil) {
-                            Text("\(viewModel.dayName(from: viewModel.day3 ?? "2024-05-18").prefix(3))")
-                                .font(.custom("Menlo", size: 26))
-                            Text("⛅️")
-                                .padding(.leading, 30)
-                            let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[2].day.avgtempC ?? 0)
-                            Text("\(avg)°")
+                    if let forecast = viewModel.response?.forecast.forecastday[1] {
+                        let det = DetailsViewModel(forecast: forecast)
+                        NavigationLink(destination: DetailsScreen(detailsViewModel: det)) {
+                            HStack(alignment: .center, spacing: nil) {
+                                Text("\(viewModel.dayName(from: viewModel.day2 ?? "2024-05-18").prefix(3))")
+                                    .font(.custom("Menlo", size: 26))
+                                
+                                Text("⛅️")
+                                    .padding(.leading, 30)
+                                let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[1].day.avgtempC ?? 0)
+                                Text("\(avg)°")
+                                
+                                Spacer()
+                                Text("\(viewModel.response?.forecast.forecastday[1].day.condition?.text ?? "Unknown")")
+                                    .font(.system(size: 14))
+                            }
+                            .font(.system(size: 24))
                             
-                            Spacer()
-                            Text("\(viewModel.response?.forecast.forecastday[2].day.condition.text ?? "Unknown")")
-                                .font(.system(size: 14))
                         }
-                        .font(.system(size: 24))
-                        
+                        .listRowBackground(Color.white.opacity(0.3))
                     }
-                    .listRowBackground(Color.white.opacity(0.3))
+                    if let forecast = viewModel.response?.forecast.forecastday[2] {
+                        let det = DetailsViewModel(forecast: forecast)
+                        NavigationLink(destination: DetailsScreen(detailsViewModel: det)) {
+                            HStack(alignment: .center, spacing: nil) {
+                                Text("\(viewModel.dayName(from: viewModel.day3 ?? "2024-05-18").prefix(3))")
+                                    .font(.custom("Menlo", size: 26))
+                                Text("⛅️")
+                                    .padding(.leading, 30)
+                                let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[2].day.avgtempC ?? 0)
+                                Text("\(avg)°")
+                                
+                                Spacer()
+                                Text("\(viewModel.response?.forecast.forecastday[2].day.condition?.text ?? "Unknown")")
+                                    .font(.system(size: 14))
+                            }
+                            .font(.system(size: 24))
+                            
+                        }
+                        .listRowBackground(Color.white.opacity(0.3))
+                    }
                 }
                 
                 .contentMargins(.vertical, 0)

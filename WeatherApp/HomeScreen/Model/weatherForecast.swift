@@ -66,9 +66,10 @@ struct Forecast: Codable {
     let forecastday: [Forecastday]
 }
 
-struct Forecastday: Codable {
+struct Forecastday: Codable, Identifiable {
     let date: String
     let dateEpoch: Int
+    var id: Int { dateEpoch }
     let day: Day
     let hour: [Hour]
 
@@ -80,13 +81,13 @@ struct Forecastday: Codable {
 }
 
 struct Day: Codable {
-    let maxtempC, maxtempF, mintempC, mintempF: Double
-    let avgtempC, avgtempF, maxwindMph, maxwindKph: Double
-    let totalprecipMm, totalprecipIn, totalsnowCM, avgvisKM: Int
-    let avgvisMiles, avghumidity, dailyWillItRain, dailyChanceOfRain: Int
-    let dailyWillItSnow, dailyChanceOfSnow: Int
-    let condition: Condition
-    let uv: Int
+    let maxtempC, maxtempF, mintempC, mintempF: Double?
+    let avgtempC, avgtempF, maxwindMph, maxwindKph: Double?
+    let totalprecipMm, totalprecipIn, totalsnowCM, avgvisKM: Int?
+    let avgvisMiles, avghumidity, dailyWillItRain, dailyChanceOfRain: Int?
+    let dailyWillItSnow, dailyChanceOfSnow: Int?
+    let condition: Condition?
+    let uv: Int?
 
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
@@ -112,27 +113,29 @@ struct Day: Codable {
 }
 
 
-struct Hour: Codable {
+struct Hour: Codable, Identifiable {
     let timeEpoch: Int
-    let time: String
-    let tempC, tempF: Double
-    let isDay: Int
+    var id: Int { timeEpoch }
+    let time: String?
+    let tempC, tempF: Double?
+    let isDay: Int?
     //let condition: Condition?
-    let windMph, windKph: Double
-    let windDegree: Int
-    let windDir: String
-    let pressureMB: Int
-    let pressureIn: Double
-    let precipMm, precipIn, snowCM, humidity: Int
-    let cloud: Int
-    let feelslikeC, feelslikeF, windchillC, windchillF: Double
-    let heatindexC, heatindexF, dewpointC, dewpointF: Double
-    let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Int
-    let visKM, visMiles: Int
-    let gustMph, gustKph: Double
-    let uv: Int
+    let windMph, windKph: Double?
+    let windDegree: Int?
+    let windDir: String?
+    let pressureMB: Int?
+    let pressureIn: Double?
+    let precipMm, precipIn, snowCM, humidity: Int?
+    let cloud: Int?
+    let feelslikeC, feelslikeF, windchillC, windchillF: Double?
+    let heatindexC, heatindexF, dewpointC, dewpointF: Double?
+    let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Int?
+    let visKM, visMiles: Int?
+    let gustMph, gustKph: Double?
+    let uv: Int?
 
     enum CodingKeys: String, CodingKey {
+        
         case timeEpoch = "time_epoch"
         case time
         case tempC = "temp_c"
