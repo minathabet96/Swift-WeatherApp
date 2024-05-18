@@ -31,7 +31,7 @@ struct HomeScreen: View {
                 Text("\(viewModel.response?.current.tempC ?? 0)°")
                     .bold()
                     .font(.system(size: 50))
-                Text("\(viewModel.response?.current.condition.text.rawValue ?? "Unknown")")
+                Text("\(viewModel.response?.current.condition.text ?? "Unknown")")
                 HStack {
                     let high = String(format: "%.1f", viewModel.response?.forecast.forecastday[0].day.maxtempC ?? 0)
                     let low = String(format: "%.1f", viewModel.response?.forecast.forecastday[0].day.mintempC ?? 0)
@@ -55,7 +55,7 @@ struct HomeScreen: View {
                             Text("\(avg)°")
                             
                             Spacer()
-                            Text("\(viewModel.response?.forecast.forecastday[0].day.condition.text.rawValue ?? "Unknown")")
+                            Text("\(viewModel.response?.forecast.forecastday[0].day.condition.text ?? "Unknown")")
                                 .font(.system(size: 14))
                         }
                         .font(.system(size: 24))
@@ -74,7 +74,7 @@ struct HomeScreen: View {
                             Text("\(avg)°")
                             
                             Spacer()
-                            Text("\(viewModel.response?.forecast.forecastday[1].day.condition.text.rawValue ?? "Unknown")")
+                            Text("\(viewModel.response?.forecast.forecastday[1].day.condition.text ?? "Unknown")")
                                 .font(.system(size: 14))
                         }
                         .font(.system(size: 24))
@@ -91,7 +91,7 @@ struct HomeScreen: View {
                             Text("\(avg)°")
                             
                             Spacer()
-                            Text("\(viewModel.response?.forecast.forecastday[2].day.condition.text.rawValue ?? "Unknown")")
+                            Text("\(viewModel.response?.forecast.forecastday[2].day.condition.text ?? "Unknown")")
                                 .font(.system(size: 14))
                         }
                         .font(.system(size: 24))
