@@ -6,29 +6,37 @@
 //
 
 import SwiftUI
+import Alamofire
 
 struct HomeScreen: View {
+    @StateObject private var locationManager = LocationManager()
+    @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
+        
         let hour = Calendar.current.component(.hour, from: Date())
         let columns = [
             GridItem(.flexible()),
             GridItem(.flexible())
         ]
+        
         NavigationView {
             VStack {
                 
                 
-                Text("Cairo")
+                
+                Text("\(viewModel.response?.location.name ?? "Unknown")")
                     .bold()
                     .font(.system(size: 50))
-                Text("16°")
+                Text("\(viewModel.response?.current.tempC ?? 0)°")
                     .bold()
                     .font(.system(size: 50))
-                Text("Partly Cloudy")
+                Text("\(viewModel.response?.current.condition.text.rawValue ?? "Unknown")")
                 HStack {
-                    Text("H: 20°")
-                    Text("L: 12°")
+                    let high = String(format: "%.1f", viewModel.response?.forecast.forecastday[0].day.maxtempC ?? 0)
+                    let low = String(format: "%.1f", viewModel.response?.forecast.forecastday[0].day.mintempC ?? 0)
+                    Text("H: \(high)°")
+                    Text("L: \(low)°")
                 }
                 Text("⛅️")
                     .font(.system(size: 100))
@@ -40,13 +48,14 @@ struct HomeScreen: View {
                     NavigationLink(destination: DetailsScreen()) {
                         HStack(alignment: .center, spacing: nil) {
                             Text("Today")
-                            
+                                .font(.custom("Menlo", size: 26))
                             Text("⛅️")
                             
-                            Text("20°")
+                            let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[0].day.avgtempC ?? 0)
+                            Text("\(avg)°")
                             
                             Spacer()
-                            Text("Mostly Cloudy")
+                            Text("\(viewModel.response?.forecast.forecastday[0].day.condition.text.rawValue ?? "Unknown")")
                                 .font(.system(size: 14))
                         }
                         .font(.system(size: 24))
@@ -56,14 +65,16 @@ struct HomeScreen: View {
                     
                     NavigationLink(destination: DetailsScreen()) {
                         HStack(alignment: .center, spacing: nil) {
-                            Text("Today")
+                            Text("\(viewModel.dayName(from: viewModel.day2 ?? "2024-05-18").prefix(3))")
+                                .font(.custom("Menlo", size: 26))
                             
                             Text("⛅️")
-                            
-                            Text("20°")
+                                .padding(.leading, 30)
+                            let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[1].day.avgtempC ?? 0)
+                            Text("\(avg)°")
                             
                             Spacer()
-                            Text("Mostly Cloudy")
+                            Text("\(viewModel.response?.forecast.forecastday[1].day.condition.text.rawValue ?? "Unknown")")
                                 .font(.system(size: 14))
                         }
                         .font(.system(size: 24))
@@ -72,14 +83,15 @@ struct HomeScreen: View {
                     .listRowBackground(Color.white.opacity(0.3))
                     NavigationLink(destination: DetailsScreen()) {
                         HStack(alignment: .center, spacing: nil) {
-                            Text("Today")
-                            
+                            Text("\(viewModel.dayName(from: viewModel.day3 ?? "2024-05-18").prefix(3))")
+                                .font(.custom("Menlo", size: 26))
                             Text("⛅️")
-                            
-                            Text("20°")
+                                .padding(.leading, 30)
+                            let avg = String(format: "%.1f", viewModel.response?.forecast.forecastday[2].day.avgtempC ?? 0)
+                            Text("\(avg)°")
                             
                             Spacer()
-                            Text("Mostly Cloudy")
+                            Text("\(viewModel.response?.forecast.forecastday[2].day.condition.text.rawValue ?? "Unknown")")
                                 .font(.system(size: 14))
                         }
                         .font(.system(size: 24))
@@ -96,28 +108,29 @@ struct HomeScreen: View {
                         Text("VISIBILITY")
                             .font(.title3)
                             .foregroundColor(.gray)
-                        Text("10 KM")
+                        Text("\(viewModel.response?.current.visKM ?? 0) KM")
                             .font(.largeTitle)
                     }
                     VStack {
                         Text("HUMIDITY")
                             .font(.title3)
                             .foregroundColor(.gray)
-                        Text("36%")
+                        Text("\(viewModel.response?.current.humidity ?? 0)%")
                             .font(.largeTitle)
                     }
                     VStack {
                         Text("FEELS LIKE")
                             .font(.title3)
                             .foregroundColor(.gray)
-                        Text("16°")
+                        let feelsLike = String(format: "%.1f", viewModel.response?.current.feelslikeC ?? 0)
+                        Text("\(feelsLike)°")
                             .font(.largeTitle)
                     }
                     VStack {
                         Text("PRESSURE")
                             .font(.title3)
                             .foregroundColor(.gray)
-                        Text("1,021")
+                        Text("\(viewModel.response?.current.pressureMB ?? 0)")
                             .font(.largeTitle)
                     }
                 }
@@ -132,9 +145,20 @@ struct HomeScreen: View {
                 .font(.largeTitle)
             
         }
+        
+        .onAppear {
+            if let location = locationManager.location {
+                viewModel.fetchData(lat: location.coordinate.latitude, lon: location.coordinate.longitude)
+            }
+        }
+        .onChange(of: locationManager.location) { newLocation in
+                    if let location = newLocation {
+                        viewModel.fetchData(lat: location.coordinate.latitude, lon: location.coordinate.longitude)
+                    }
+                }
     }
-    
 }
+
 
 
 #Preview {
