@@ -31,7 +31,7 @@ class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
-                        print(error.localizedDescription)
+                        print(error)
                         self.errorMessage = error.localizedDescription
                     }
                 }
