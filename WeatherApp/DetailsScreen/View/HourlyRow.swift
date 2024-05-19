@@ -4,7 +4,7 @@
 //
 //  Created by Mina on 18/05/2024.
 //
-
+import Kingfisher
 import SwiftUI
 
 struct HourlyRow: View {
@@ -14,7 +14,8 @@ struct HourlyRow: View {
             
             Text(formatDateString(hour?.time ?? "Now") ?? "Now")
             Spacer()
-            Text("⛅️")
+            KFImage.url(URL(string: "https:\(hour?.condition?.icon ?? "⛅️")"))
+                .frame(width: 50, height: 50, alignment: .center)
             Spacer()
             Text("\(String(format: "%.1f", hour?.tempC ?? 15.0))°")
         }

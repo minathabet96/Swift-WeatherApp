@@ -17,16 +17,16 @@ struct WeatherForecast: Codable {
 struct Current: Codable {
     let lastUpdatedEpoch: Int
     let lastUpdated: String
-    let tempC: Int
+    let tempC: Double
     let tempF: Double
     let isDay: Int
     let condition: Condition
 
-    let pressureMB: Int
-    let pressureIn: Double
-    let precipMm, precipIn, humidity, cloud: Int
-    let feelslikeC, feelslikeF: Double
-    let visKM: Int
+    let pressureMB: Int?
+    let pressureIn: Double?
+    let precipMm, precipIn, humidity, cloud: Double?
+    let feelslikeC, feelslikeF: Double?
+    let visKM: Double?
 
     enum CodingKeys: String, CodingKey {
         case lastUpdatedEpoch = "last_updated_epoch"
@@ -50,16 +50,10 @@ struct Current: Codable {
 
 struct Condition: Codable {
     let text: String
-    let icon: Icon
+    let icon: String
     let code: Int
 }
 
-enum Icon: String, Codable {
-    case cdnWeatherapiCOMWeather64X64Day113PNG = "//cdn.weatherapi.com/weather/64x64/day/113.png"
-    case cdnWeatherapiCOMWeather64X64Day122PNG = "//cdn.weatherapi.com/weather/64x64/day/122.png"
-    case cdnWeatherapiCOMWeather64X64Night113PNG = "//cdn.weatherapi.com/weather/64x64/night/113.png"
-    case cdnWeatherapiCOMWeather64X64Night116PNG = "//cdn.weatherapi.com/weather/64x64/night/116.png"
-}
 
 
 struct Forecast: Codable {
@@ -83,11 +77,11 @@ struct Forecastday: Codable, Identifiable {
 struct Day: Codable {
     let maxtempC, maxtempF, mintempC, mintempF: Double?
     let avgtempC, avgtempF, maxwindMph, maxwindKph: Double?
-    let totalprecipMm, totalprecipIn, totalsnowCM, avgvisKM: Int?
-    let avgvisMiles, avghumidity, dailyWillItRain, dailyChanceOfRain: Int?
-    let dailyWillItSnow, dailyChanceOfSnow: Int?
+    let totalprecipMm, totalprecipIn, totalsnowCM, avgvisKM: Double?
+    let avgvisMiles, avghumidity, dailyWillItRain, dailyChanceOfRain: Double?
+    let dailyWillItSnow, dailyChanceOfSnow: Double?
     let condition: Condition?
-    let uv: Int?
+    let uv: Double?
 
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
@@ -119,18 +113,18 @@ struct Hour: Codable, Identifiable {
     let time: String?
     let tempC, tempF: Double?
     let isDay: Int?
-    //let condition: Condition?
+    let condition: Condition?
     let windMph, windKph: Double?
-    let windDegree: Int?
+    let windDegree: Double?
     let windDir: String?
     let pressureMB: Int?
     let pressureIn: Double?
-    let precipMm, precipIn, snowCM, humidity: Int?
-    let cloud: Int?
+    let precipMm, precipIn, snowCM, humidity: Double?
+    let cloud: Double?
     let feelslikeC, feelslikeF, windchillC, windchillF: Double?
     let heatindexC, heatindexF, dewpointC, dewpointF: Double?
-    let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Int?
-    let visKM, visMiles: Int?
+    let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Double?
+    let visKM, visMiles: Double?
     let gustMph, gustKph: Double?
     let uv: Int?
 
@@ -141,7 +135,7 @@ struct Hour: Codable, Identifiable {
         case tempC = "temp_c"
         case tempF = "temp_f"
         case isDay = "is_day"
-        //case condition
+        case condition
         case windMph = "wind_mph"
         case windKph = "wind_kph"
         case windDegree = "wind_degree"
