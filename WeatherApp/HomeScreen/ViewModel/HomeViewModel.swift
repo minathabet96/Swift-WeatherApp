@@ -8,10 +8,11 @@
 import Foundation
 import Alamofire
 import MapKit
+
 class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-    
+    @Published var isLoading = false
     @Published var response: WeatherForecast?
-    @Published var errorMessage: String?
+    @Published var failed = false
     @Published var day2: String?
     @Published var day3: String?
     func fetchData(lat: Double, lon: Double) {
@@ -22,18 +23,19 @@ class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             .responseDecodable(of: WeatherForecast.self) { response in
                 switch response.result {
                 case .success(let data):
-                    DispatchQueue.main.async {
-                        self.day2 = data.forecast.forecastday[1].date
-                        self.day3 = data.forecast.forecastday[2].date
+                    DispatchQueue.main.async { [weak self] in
+                        self?.failed = false
+                        self?.day2 = data.forecast.forecastday[1].date
+                        self?.day3 = data.forecast.forecastday[2].date
                         print("success")
                         print(data.forecast.forecastday[0].hour.count)
-                        
-                        self.response = data
+                        self?.hideLoading()
+                        self?.response = data
                     }
                 case .failure(let error):
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
                         print(error)
-                        self.errorMessage = error.localizedDescription
+                        self?.failed = true
                     }
                 }
             }
@@ -42,5 +44,12 @@ class HomeViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         let dateFormatter = DateFormatter(); dateFormatter.dateFormat = "yyyy-MM-dd"
         let dayName = dateFormatter.weekdaySymbols[Calendar.current.component(.weekday, from: dateFormatter.date(from: date)!) - 1]
         return dayName
+    }
+    func showLoading() {
+        isLoading = true
+    }
+    
+    func hideLoading() {
+        isLoading = false
     }
 }
