@@ -28,7 +28,7 @@ struct HomeScreen: View {
                 Text("\(viewModel.response?.location.name ?? "Unknown")")
                     .bold()
                     .font(.system(size: 50))
-                Text("\(viewModel.response?.current.tempC ?? 0)°")
+                Text("\(String(format: "%.1f",viewModel.response?.current.tempC ?? 0))°")
                     .bold()
                     .font(.system(size: 50))
                 Text("\(viewModel.response?.current.condition.text ?? "Unknown")")
@@ -117,14 +117,14 @@ struct HomeScreen: View {
                         Text("VISIBILITY")
                             .font(.title3)
                             .foregroundColor(.gray)
-                        Text("\(viewModel.response?.current.visKM ?? 0) KM")
+                        Text("\(String(format: "%.0f", viewModel.response?.current.visKM ?? 0)) KM")
                             .font(.largeTitle)
                     }
                     VStack {
                         Text("HUMIDITY")
                             .font(.title3)
                             .foregroundColor(.gray)
-                        Text("\(viewModel.response?.current.humidity ?? 0)%")
+                        Text("\(String(format: "%.0f", viewModel.response?.current.humidity ?? 0))%")
                             .font(.largeTitle)
                     }
                     VStack {
